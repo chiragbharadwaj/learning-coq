@@ -48,15 +48,19 @@ Notation "b1 || b2" := (orb b1 b2).
 Definition nandb (b1: bool') (b2: bool') : bool' :=
   negb (b1 && b2).
 
+(* Test: ~[False /\ False] = False. *)
 Example testNandb1: (nandb F F) = T.
 Proof. simpl. reflexivity. Qed.
 
+(* Test: ~[False /\ True] = False. *)
 Example testNandb2: (nandb F T) = T.
 Proof. simpl. reflexivity. Qed.
 
+(* Test: ~[True /\ False] = False. *)
 Example testNandb3: (nandb T F) = T.
 Proof. simpl. reflexivity. Qed.
 
+(* Test: ~[True /\ True] = False. *)
 Example testNandb4: (nandb T T) = F.
 Proof. simpl. reflexivity. Qed.
 
@@ -69,27 +73,35 @@ Proof. simpl. reflexivity. Qed.
 Definition andb3 (b1: bool') (b2: bool') (b3: bool') : bool' :=
   b1 && b2 && b3.
 
+(* Test: False /\ False /\ False = False. *)
 Example testAndb31: (andb3 F F F) = F.
 Proof. simpl. reflexivity. Qed.
 
+(* Test: False /\ False /\ True = False. *)
 Example testAndb32: (andb3 F F T) = F.
 Proof. simpl. reflexivity. Qed.
 
+(* Test: False /\ True /\ False = False. *)
 Example testAndb33: (andb3 F T F) = F.
 Proof. simpl. reflexivity. Qed.
 
+(* Test: False /\ True /\ True = False. *)
 Example testAndb34: (andb3 F T T) = F.
 Proof. simpl. reflexivity. Qed.
 
+(* Test: True /\ False /\ False = False. *)
 Example testAndb35: (andb3 T F F) = F.
 Proof. simpl. reflexivity. Qed.
 
+(* Test: True /\ False /\ True = False. *)
 Example testAndb36: (andb3 T F T) = F.
 Proof. simpl. reflexivity. Qed.
 
+(* Test: True /\ True /\ False = False. *)
 Example testAndb37: (andb3 T T F) = F.
 Proof. simpl. reflexivity. Qed.
 
+(* Test: True /\ True /\ True = True. *)
 Example testAndb38: (andb3 T T T) = T.
 Proof. simpl. reflexivity. Qed.
 
@@ -148,9 +160,11 @@ Fixpoint factorialn (n: nat') : nat' :=
   | Succ n' => multn n (factorialn n')
   end.
 
+(* Test: factorialn 3 = 6. *)
 Example testFactorialn1: (factorialn (Succ (Succ (Succ Zero)))) = Succ (Succ (Succ (Succ (Succ (Succ Zero))))).
 Proof. simpl. reflexivity. Qed.
 
+(* Test: factorialn 5 = 10 * 12. *)
 Example testFactorialn2: (factorialn (Succ (Succ (Succ (Succ (Succ Zero)))))) =
   multn (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ Zero)))))))))) (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ Zero)))))))))))).
 Proof. simpl. reflexivity. Qed.
@@ -187,6 +201,7 @@ Fixpoint leqn (n1: nat') (n2: nat') : bool' :=
       end
   end.
 
+(* Defining shorthand notation for boolean comparisons over natural numbers. *)
 Notation "n1 = n2"  := (eqn n1 n2).
 Notation "n1 <= n2" := (leqn n1 n2).
 
@@ -198,12 +213,15 @@ Notation "n1 <= n2" := (leqn n1 n2).
 Definition ltn (n1: nat') (n2: nat') : bool' :=
   (n1 <= n2) && (negb (n1 = n2)).
 
+(* Test: [2 < 2] = False. *)
 Example testLtn1: (ltn (Succ (Succ Zero)) (Succ (Succ Zero))) = F.
 Proof. simpl. reflexivity. Qed.
 
+(* Test: [2 < 4] = True. *)
 Example testLtn2: (ltn (Succ (Succ Zero)) (Succ (Succ (Succ (Succ Zero))))) = T.
 Proof. simpl. reflexivity. Qed.
 
+(* Test: [4 < 2] = False. *)
 Example testLtn3: (ltn (Succ (Succ (Succ (Succ Zero)))) (Succ (Succ Zero))) = F.
 Proof. simpl. reflexivity. Qed.
 
@@ -218,6 +236,7 @@ Proof. simpl. reflexivity. Qed.
  ******************************************************************************)
 
 (* + *)
+(* Theorem: If n1 = n2 and n2 = n3, then n1 + n2 = n2 + n3. *)
 Theorem plusId: forall n1 n2 n3 : nat,
   n1 = n2 ->
   n2 = n3 ->
@@ -229,6 +248,7 @@ Proof.
   rewrite <- H2.
   reflexivity. Qed.
 
+(* Theorem: Succ and +1 are the same thing. *)
 Theorem plus1L: forall n : nat,
   1 + n = S n.
 Proof.
@@ -237,6 +257,7 @@ Proof.
   reflexivity. Qed.
 
 (* ++ *)
+(* Theorem: If n2 = 1 + n1, then n2 * (1 + n1) = n2 ^ 2. *)
 Theorem multSuccL: forall n1 n2 : nat,
   n2 = S n1 ->
   n2 * (1 + n1) = n2 * n2.
