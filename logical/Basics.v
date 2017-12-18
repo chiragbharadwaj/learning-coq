@@ -166,7 +166,8 @@ Proof. simpl. reflexivity. Qed.
 
 (* Test: factorialn 5 = 10 * 12. *)
 Example testFactorialn2: (factorialn (Succ (Succ (Succ (Succ (Succ Zero)))))) =
-  multn (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ Zero)))))))))) (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ Zero)))))))))))).
+  multn (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ Zero))))))))))
+        (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ (Succ Zero)))))))))))).
 Proof. simpl. reflexivity. Qed.
 
 (* [eqn n1 n2] returns the boolean [n1] == [n2].
